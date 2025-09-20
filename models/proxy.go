@@ -50,7 +50,7 @@ func CheckProxy(p Proxy) bool {
 	case "https":
 		return proxy.CheckOutproxySocksHTTPs(p.Address, p.Port)
 	case "socks":
-		return proxy.CheckOutproxySocksChain(p.Address, p.Port)
+		return proxy.CheckOutproxySocksChain(p.Address, p.Port,true)
 	default:
 		log.Println("Unknown proxy type:", p.Type)
 		return false

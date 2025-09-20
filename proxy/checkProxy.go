@@ -70,19 +70,27 @@ func CheckOutproxySocksHTTPs(address string, port int) bool {
 
 //
 
-func CheckOutproxySocksChain(address string, port int) bool {
+func CheckOutproxySocksChain(address string, port int, verbose bool) bool {
 	localSocks := localSocksProxy
 	targetSocks := fmt.Sprintf("%s:%d", address, port)
 
+	if verbose {
+		log.Printf("[Verbose] Local SOCKS: %s, Target SOCKS: %s\n", localSocks, targetSocks)
+	}
+
 	innerDialer, err := proxy.SOCKS5("tcp", localSocks, nil, proxy.Direct)
 	if err != nil {
-		log.Println("Target SOCKS5 dialer error:", err)
+		if verbose {
+			log.Println("[Verbose] Error creating inner SOCKS5 dialer:", err)
+		}
 		return false
 	}
 
 	outerDialer, err := proxy.SOCKS5("tcp", targetSocks, nil, innerDialer)
 	if err != nil {
-		log.Println("Local SOCKS5 dialer error:", err)
+		if verbose {
+			log.Println("[Verbose] Error creating outer SOCKS5 dialer:", err)
+		}
 		return false
 	}
 
@@ -98,19 +106,31 @@ func CheckOutproxySocksChain(address string, port int) bool {
 		Timeout:   20 * time.Second,
 	}
 
+	if verbose {
+		log.Println("[Verbose] Sending GET request to", addrToCheck)
+	}
 	resp, err := client.Get(addrToCheck)
 	if err != nil {
-		log.Println("GET error:", err)
+		if verbose {
+			log.Println("[Verbose] GET error:", err)
+		}
 		return false
 	}
 	defer resp.Body.Close()
 
 	body, _ := io.ReadAll(resp.Body)
-	log.Println("Response status:", resp.Status)
-	log.Println("Body first 200 chars:\n", string(body)[:200])
+	if verbose {
+		log.Println("[Verbose] Response status:", resp.Status)
+		if len(body) > 200 {
+			log.Println("[Verbose] Body first 200 chars:\n", string(body)[:200])
+		} else {
+			log.Println("[Verbose] Body:\n", string(body))
+		}
+	}
 
 	return resp.StatusCode >= 200 && resp.StatusCode < 400
 }
+
 
 ///
 
