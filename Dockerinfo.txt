@@ -1,0 +1,2 @@
+docker exec -it i2pd cat /home/i2pd/data/outproxy.dat > key.dat
+docker run --rm -it   -v ${PWD}:/workdir   justinhimself/i2pd-tools   keyinfo key.dat
