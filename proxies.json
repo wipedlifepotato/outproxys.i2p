@@ -4,5 +4,17 @@
     "port": 443,
     "uptime": 100,
     "type": "https"
+  },
+  {
+    "address": "proxy4uwdijqxac2bvdx4fuhem6njmiwukuk2gelejv2nzxka2xq.b32.i2p",
+    "port": 3128,
+    "uptime": 50,
+    "type": "http"
+  },
+  {
+    "address": "proxy4uwdijqxac2bvdx4fuhem6njmiwukuk2gelejv2nzxka2xq.b32.i2p",
+    "port": 1080,
+    "uptime": 50,
+    "type": "socks"
   }
 ]
