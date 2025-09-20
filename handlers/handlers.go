@@ -39,14 +39,25 @@ func AddHandle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid i2p address", http.StatusBadRequest)
 		return
 	}
-
-	if !models.CheckProxy(models.Proxy{Address: address, Port: port, Type: typeStr, Uptime: 50}) {
+	newProxy := models.Proxy{
+		Address: address,
+		Port:    port,
+		Type:    typeStr,
+		Uptime:  50,
+	}
+	if !models.CheckProxy(newProxy) {
 		http.Error(w, "not a valid outproxy", http.StatusBadRequest)
 		return
 	}
 
 	goroutines.Mu.Lock()
 	proxies, _ := models.LoadProxies()
+	for _, p := range proxies {
+		if p.Address == newProxy.Address && p.Port == newProxy.Port {
+			http.Error(w, "proxy already exists", http.StatusConflict)
+			return
+		}
+	}
 	proxies = append(proxies, models.Proxy{Address: address, Port: port, Type: typeStr, Uptime: 50})
 	models.SaveProxies(proxies)
 	goroutines.Mu.Unlock()
