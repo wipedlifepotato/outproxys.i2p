@@ -6,7 +6,8 @@ import "outproxys/proxy"
 import "log"
 import "github.com/spf13/viper"
 
-var dataFile = viper.GetString("dataFile") //"proxies.json"
+var dataFile = ""
+const defDataFile = "proxies.json"
 
 type Proxy struct {
 	Address string `json:"address"`
@@ -16,6 +17,12 @@ type Proxy struct {
 }
 
 func LoadProxies() ([]Proxy, error) {
+	dataFile = viper.GetString("dataFile")
+	if dataFile == "" {
+		log.Println("Data file is nil")
+		dataFile=defDataFile
+	}
+	log.Println("load proxies from " + dataFile)
 	file, err := os.ReadFile(dataFile)
 	if err != nil {
 		if os.IsNotExist(err) {

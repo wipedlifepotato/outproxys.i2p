@@ -58,7 +58,11 @@ func MainHandle(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("public/index.html"))
 
 	goroutines.Mu.Lock()
-	proxies, _ := models.LoadProxies()
+	proxies, err := models.LoadProxies()
+	if err != nil {
+		http.Error(w, "Can't read proxies", http.StatusBadRequest)
+		return
+	}
 	goroutines.Mu.Unlock()
 
 	sort.Slice(proxies, func(i, j int) bool {
@@ -98,7 +102,7 @@ func MainHandle(w http.ResponseWriter, r *http.Request) {
 		Donation: viper.GetString("page.donation"),
 	}
 
-	err := tmpl.Execute(w, pd)
+	err = tmpl.Execute(w, pd)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
