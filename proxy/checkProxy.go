@@ -8,9 +8,21 @@ import (
 	"net/http"
 	"net/url"
 	"time"
-
+	"os"
 	"golang.org/x/net/proxy"
 )
+
+var (
+	addrToCheck     = "https://check.torproject.org"
+	localSocksProxy = getEnv("I2PD_SOCKS_HOST", "127.0.0.1") + ":" + getEnv("I2PD_SOCKS_PORT", "4447")
+)
+
+func getEnv(key, def string) string {
+	if val := os.Getenv(key); val != "" {
+		return val
+	}
+	return def
+}
 
 func CheckOutproxySocksHTTPs(address string, port int) bool {
 
@@ -103,8 +115,8 @@ func CheckOutproxySocksChain(address string, port int) bool {
 ///
 
 func CheckOutproxySocksHTTP(address string, port int) bool {
-	socksAddr := "127.0.0.1:4447"                             // локальный SOCKS5
-	targetProxy := fmt.Sprintf("http://%s:%d", address, port) // целевой HTTP-прокси
+	socksAddr := localSocksProxy
+	targetProxy := fmt.Sprintf("http://%s:%d", address, port)
 
 	proxyURL, err := url.Parse(targetProxy)
 	if err != nil {
