@@ -1,5 +1,9 @@
 monitor:
-  interval_seconds: 120
+  interval_seconds: 3600
 server:
   host: "127.0.0.1"
   port: 9313
+page:
+ donation: "XMR: 85RrkEFxLWgjh14tHcodrSEXpTED55281Aj3qCAGBuYWi6NywkPsLRfEYW7Rxhqt1Tiir7aWsWGdpFQWMp8pqnfiHfxGvay"
+ proxyPerPage: 20
+dataFile: "proxies.json"

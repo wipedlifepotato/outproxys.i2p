@@ -12,11 +12,9 @@ import (
 	"golang.org/x/net/proxy"
 )
 
-
 func CheckOutproxySocksHTTPs(address string, port int) bool {
 
 	socksAddr := localSocksProxy
-
 
 	targetProxy := fmt.Sprintf("http://%s:%d", address, port)
 	proxyURL, err := url.Parse(targetProxy)
@@ -25,13 +23,11 @@ func CheckOutproxySocksHTTPs(address string, port int) bool {
 		return false
 	}
 
-
 	socksDialer, err := proxy.SOCKS5("tcp", socksAddr, nil, proxy.Direct)
 	if err != nil {
 		log.Println("SOCKS5 dialer error:", err)
 		return false
 	}
-
 
 	transport := &http.Transport{
 		Proxy: http.ProxyURL(proxyURL),
@@ -64,7 +60,7 @@ func CheckOutproxySocksHTTPs(address string, port int) bool {
 
 func CheckOutproxySocksChain(address string, port int) bool {
 	localSocks := localSocksProxy
-	targetSocks := fmt.Sprintf("%s:%d", address, port) 
+	targetSocks := fmt.Sprintf("%s:%d", address, port)
 
 	innerDialer, err := proxy.SOCKS5("tcp", localSocks, nil, proxy.Direct)
 	if err != nil {
@@ -103,10 +99,11 @@ func CheckOutproxySocksChain(address string, port int) bool {
 
 	return resp.StatusCode >= 200 && resp.StatusCode < 400
 }
+
 ///
 
 func CheckOutproxySocksHTTP(address string, port int) bool {
-	socksAddr := "127.0.0.1:4447"                     // локальный SOCKS5
+	socksAddr := "127.0.0.1:4447"                             // локальный SOCKS5
 	targetProxy := fmt.Sprintf("http://%s:%d", address, port) // целевой HTTP-прокси
 
 	proxyURL, err := url.Parse(targetProxy)
@@ -147,4 +144,3 @@ func CheckOutproxySocksHTTP(address string, port int) bool {
 
 	return resp.StatusCode >= 200 && resp.StatusCode < 400
 }
-
