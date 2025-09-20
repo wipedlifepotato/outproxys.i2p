@@ -39,7 +39,7 @@ jobs:
           go build -o bin/outproxys-${GOOS}-${GOARCH}${EXT}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: outproxys-${{ matrix.os }}-${{ matrix.arch }}
           path: bin/
