@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  i2pd:
+    image: purplei2p/i2pd:latest
+    container_name: i2pd
+    ports:
+      - "4447:4447"
+      - "7070:7070"
+    volumes:
+      - i2pd_data:/i2pd
+    restart: unless-stopped
+
+  outproxys:
+    build: .
+    container_name: outproxys
+    depends_on:
+      - i2pd
+    environment:
+      - I2PD_SOCKS_HOST=i2pd
+      - I2PD_SOCKS_PORT=4447
+    ports:
+      - "9312:9312"
+    restart: unless-stopped
+
+volumes:
+  i2pd_data:
