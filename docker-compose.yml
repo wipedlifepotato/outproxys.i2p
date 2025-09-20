@@ -2,26 +2,26 @@ version: "3.9"
 
 services:
   i2pd:
-    image: purplei2p/i2pd:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.i2pd
     container_name: i2pd
-    ports:
-      - "4447:4447"
-      - "7070:7070"
     volumes:
-      - i2pd_data:/i2pd
+      - ./tunnel.conf:/home/i2pd/data/tunnels.conf
     restart: unless-stopped
-
   outproxys:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: outproxys
+    restart: unless-stopped
     depends_on:
       - i2pd
     environment:
-      - I2PD_SOCKS_HOST=i2pd
-      - I2PD_SOCKS_PORT=4447
+      I2PD_SOCKS_HOST: "i2pd"
+      I2PD_SOCKS_PORT: "4447"
     ports:
-      - "9312:9312"
-    restart: unless-stopped
+      - "9313:9313"
 
 volumes:
   i2pd_data:
