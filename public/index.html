@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <title>Outproxys</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #222;
+      margin: 20px;
+    }
+
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    form {
+      margin-bottom: 20px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"], input[type="number"] {
+      padding: 5px;
+      margin-right: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="radio"] {
+      margin-left: 10px;
+      margin-right: 3px;
+    }
+
+    button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    div {
+      margin-top: 10px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #333;
+      padding: 3px 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+
+    a:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>List outproxy</h1>
+  <form method="POST" action="/add">
+    <input type="text" name="address" placeholder="Введите b32.i2p">
+    <input type="text" name="port" placeholder="Порт (например 4444)">
+    <label>
+	  <input type="radio" name="type" value="http" checked> HTTP
+    </label>
+    <label>
+	  <input type="radio" name="type" value="https"> HTTPS
+    </label>
+    <label>
+	  <input type="radio" name="type" value="socks"> SOCKS
+    </label>
+    <button type="submit">Add</button>
+  </form>
+
+  <table border="1">
+    <tr><th>Addr</th><th>Port</th><th>Uptime %</th><th>Type</th></tr>
+	{{range .Proxies}}
+	<tr>
+	  <td>{{.Address}}</td>
+	  <td>{{.Port}}</td>
+	  <td>{{.Uptime}}</td>
+	  <td>{{.Type}}</td>
+	</tr>
+	{{end}}
+  </table>
+
+  <div>
+    {{if .PrevLink}}<a href="{{.PrevLink}}">back</a>{{end}}
+    {{if .NextLink}}<a href="{{.NextLink}}">next</a>{{end}}
+  </div>
+
+</body>
+</html>
+
