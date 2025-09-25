@@ -8,13 +8,31 @@
   {
     "address": "proxy4uwdijqxac2bvdx4fuhem6njmiwukuk2gelejv2nzxka2xq.b32.i2p",
     "port": 3128,
-    "uptime": 50,
+    "uptime": 100,
     "type": "http"
   },
   {
     "address": "proxy4uwdijqxac2bvdx4fuhem6njmiwukuk2gelejv2nzxka2xq.b32.i2p",
     "port": 1080,
-    "uptime": 50,
+    "uptime": 100,
     "type": "socks"
+  },
+  {
+    "address": "5d4s7pcvfdpftfk7npc7hllyujhufsdprtrf4o53i44rgsa2xbwa.b32.i2p",
+    "port": 80,
+    "uptime": 0,
+    "type": "http"
+  },
+  {
+    "address": "smaie7bxvpy53iiabfxkhmsjtqs7vzjcr5xxsysjbbobunwrav2q.b32.i2p",
+    "port": 80,
+    "uptime": 100,
+    "type": "http"
+  },
+  {
+    "address": "ia55kcrvskaitnxegirubvderl4vhva6bwkiducbkma4scy2rhca.b32.i2p",
+    "port": 80,
+    "uptime": 39,
+    "type": "http"
   }
 ]
