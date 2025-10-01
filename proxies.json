@@ -20,7 +20,7 @@
   {
     "address": "5d4s7pcvfdpftfk7npc7hllyujhufsdprtrf4o53i44rgsa2xbwa.b32.i2p",
     "port": 80,
-    "uptime": 0,
+    "uptime": 1,
     "type": "http"
   },
   {
@@ -32,7 +32,7 @@
   {
     "address": "ia55kcrvskaitnxegirubvderl4vhva6bwkiducbkma4scy2rhca.b32.i2p",
     "port": 80,
-    "uptime": 39,
+    "uptime": 100,
     "type": "http"
   }
 ]
